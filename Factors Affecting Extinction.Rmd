@@ -1,0 +1,46 @@
+---
+title: "Factors Affecting Extinction"
+output: pdf_document
+date: "2023-03-04"
+---
+
+## Exercise 1
+Begin with describing and fitting a full model in which the intercepts and
+slopes of the extinction times versus numbers of pairs may be different in all
+four combinations of size and migratory status.
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+data <- read.csv("data.csv")
+
+# Create the scatterplot
+my_plot <- ggplot(data, aes(x=Pairs, y=Time)) +
+  geom_point() +
+  facet_wrap(~ Size + Status, nrow=2) +
+  geom_smooth(method="lm", se=FALSE)
+
+# Add axis labels and a title
+my_plot + xlab("Number of Pairs") + ylab("Years Until Extinction") +
+  ggtitle("Relationship between Pairs and Time by Size and Status")
+```
+Comment: The relationship between years until extinction for a species
+and the number of nesting pairs seems to be bigger for migratory species of 
+either size than for resident species.
+
+```{r, echo=FALSE}
+r_squared <- data %>% 
+  group_by(Size, Status) %>% 
+  do(model = lm(Time ~ Pairs, data = .)) %>% 
+  summarise(
+    intercept = coef(model)[1],
+    slope = coef(model)[2],
+    adj_r_squared = summary(model)$adj.r.squared,
+    combination = paste(Size, Status, sep = "_")
+  )
+
+# Print R-squared values
+print(r_squared)
+```

@@ -11,7 +11,7 @@ my_plot <- ggplot(data, aes(x=Pairs, y=Time)) +
   geom_smooth(method="lm", se=FALSE)
 
 # Add axis labels and a title
-my_plot + xlab("Number of Pairs") + ylab("Years Until Extinction") +
+my_plot <- my_plot + xlab("Number of Pairs") + ylab("Years Until Extinction") +
   ggtitle("Relationship between Pairs and Time by Size and Status")
 
 print(my_plot)

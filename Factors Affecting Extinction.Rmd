@@ -72,6 +72,8 @@ Outliers: Points that are far away from the horizontal dashed line may be outlie
 
 Based on the residual plot, we can see that the residuals are mostly randomly scattered around the horizontal dashed line for each group, which is a good sign that the model is fitting the data reasonably well. However, we can also see some patterns in the residuals for some groups, particularly for the small resident and large migrant groups. This may indicate that the model needs to be transformed or that there are outliers affecting the fit of the model for these groups. We should investigate further to determine the cause of these patterns and outliers.
 
+aass
+
 
 
 

@@ -72,7 +72,64 @@ Outliers: Points that are far away from the horizontal dashed line may be outlie
 
 Based on the residual plot, we can see that the residuals are mostly randomly scattered around the horizontal dashed line for each group, which is a good sign that the model is fitting the data reasonably well. However, we can also see some patterns in the residuals for some groups, particularly for the small resident and large migrant groups. This may indicate that the model needs to be transformed or that there are outliers affecting the fit of the model for these groups. We should investigate further to determine the cause of these patterns and outliers.
 
-aass
+## Exercise 3
+3. Try the following transformations log(”time”), sqrt(”time”) and 1/(”time”).
+Which seems to be the best fit (examine residual plots)?
+
+```{r}
+# Create the models with different transformations
+full_model_log <- lm(log(Time) ~ Pairs * Size * Status, data = data)
+
+full_model_sqrt <- lm(sqrt(Time) ~ Pairs * Size * Status, data = data)
+
+full_model_div <- lm(1/Time ~ Pairs * Size * Status, data = data)
+
+# Create a residual plot for log
+residual_plot_log <- ggplot(data, aes(x = Pairs, y = resid(full_model_log))) +
+  geom_point() +
+  facet_wrap(~ Size + Status, nrow = 2) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  xlab("Number of Pairs") +
+  ylab("Residuals") +
+  ggtitle("Residual Plot for log")
+full_model <- lm(1/(Time) ~ Pairs * Size * Status, data = data)
+
+# Create a residual plot for sqrt
+residual_plot_sqrt <- ggplot(data, aes(x = Pairs, y = resid(full_model_sqrt))) +
+  geom_point() +
+  facet_wrap(~ Size + Status, nrow = 2) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  xlab("Number of Pairs") +
+  ylab("Residuals") +
+  ggtitle("Residual Plot for sqrt")
+
+# Create a residual plot
+residual_plot_div <- ggplot(data, aes(x = Pairs, y = resid(full_model_div))) +
+  geom_point() +
+  facet_wrap(~ Size + Status, nrow = 2) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  xlab("Number of Pairs") +
+  ylab("Residuals") +
+  ggtitle("Residual Plot for 1/Time")
+
+print(residual_plot_log)
+print(residual_plot_sqrt)
+print(residual_plot_div)
+
+# Based on the residual plots, log(time) appears to be the best transformation
+
+# Create the scatterplot
+my_plot <- ggplot(data, aes(x=Pairs, y=log(Time))) +
+  geom_point() +
+  facet_wrap(~ Size + Status, nrow=2) +
+  geom_smooth(method="lm", se=FALSE)
+
+# Add axis labels and a title
+my_plot <- my_plot + xlab("Number of Pairs") + ylab("Years Until Extinction") +
+  ggtitle("Relationship between Pairs and log(Time) by Size and Status")
+
+print(my_plot)
+```
 
 
 

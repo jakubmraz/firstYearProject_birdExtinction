@@ -41,3 +41,17 @@ residual_plot_div <- ggplot(data, aes(x = Pairs, y = resid(full_model_div))) +
 print(residual_plot_log)
 print(residual_plot_sqrt)
 print(residual_plot_div)
+
+# Based on the residual plots, log(time) appears to be the best transformation
+
+# Create the scatterplot
+my_plot <- ggplot(data, aes(x=Pairs, y=log(Time))) +
+  geom_point() +
+  facet_wrap(~ Size + Status, nrow=2) +
+  geom_smooth(method="lm", se=FALSE)
+
+# Add axis labels and a title
+my_plot <- my_plot + xlab("Number of Pairs") + ylab("Years Until Extinction") +
+  ggtitle("Relationship between Pairs and Time by Size and Status")
+
+print(my_plot)

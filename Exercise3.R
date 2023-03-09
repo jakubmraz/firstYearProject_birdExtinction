@@ -17,7 +17,7 @@ sqrt_plot <- ggplot(data = data, aes(x=Pairs, y=Time)) +
   geom_point() + scale_y_sqrt()
 print(sqrt_plot)
 
-#1/time
+#1/time g
 inverse_plot <- ggplot(data = data, aes(x=Pairs, y=1/Time)) +
   geom_point()
 print(inverse_plot)

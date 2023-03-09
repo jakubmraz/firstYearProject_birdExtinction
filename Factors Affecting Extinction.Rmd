@@ -13,7 +13,9 @@ four combinations of size and migratory status.
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+```
 
+```{r, echo=FALSE}
 data <- read.csv("data.csv")
 
 # Create the scatterplot

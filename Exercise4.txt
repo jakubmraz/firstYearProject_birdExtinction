@@ -11,3 +11,6 @@ Secondly, removing outliers can result in a loss of information and a biased ana
 Finally, keeping outliers in the dataset can allow for more robust statistical analysis. There are methods such as robust regression or non-parametric tests that can handle outliers and provide more accurate results.
 
 Therefore, it is important to keep outliers in the dataset and carefully consider their impact on the results. Rather than removing them, it may be more appropriate to investigate why they exist and how they may affect the analysis.
+
+
+Rewrite using your own words:

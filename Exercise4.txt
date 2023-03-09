@@ -1,0 +1,13 @@
+ChatGPT says:
+
+The outlier in each end of the scale can have a significant impact on the results. They can affect the measures of central tendency (mean, median, and mode) and the spread of the data (standard deviation and range).
+
+However, it is important to keep them in the dataset for several reasons.
+
+Firstly, outliers can provide important information about the distribution of the data. They can indicate the presence of unusual or extreme values, which can be valuable for understanding the range and variability of the data. For example, in this dataset, the outlier for the Peregrine species indicates that it has a significantly lower average time until extinction than other species, which could be due to specific environmental or ecological factors.
+
+Secondly, removing outliers can result in a loss of information and a biased analysis. Outliers may represent rare but important occurrences that should not be ignored. Removing outliers can also result in a distorted view of the true distribution of the data and lead to incorrect conclusions. For example, if we were to remove the outlier for the Raven species in this dataset, we would miss the fact that it has a much longer average time until extinction than other species.
+
+Finally, keeping outliers in the dataset can allow for more robust statistical analysis. There are methods such as robust regression or non-parametric tests that can handle outliers and provide more accurate results.
+
+Therefore, it is important to keep outliers in the dataset and carefully consider their impact on the results. Rather than removing them, it may be more appropriate to investigate why they exist and how they may affect the analysis.

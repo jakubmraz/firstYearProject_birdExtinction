@@ -131,6 +131,21 @@ my_plot <- my_plot + xlab("Number of Pairs") + ylab("Years Until Extinction") +
 print(my_plot)
 ```
 
+```{r}
+r_squared <- data %>% 
+  group_by(Size, Status) %>% 
+  do(model = lm(log(Time) ~ Pairs, data = .)) %>% 
+  summarise(
+    intercept = coef(model)[1],
+    slope = coef(model)[2],
+    adj_r_squared = summary(model)$adj.r.squared,
+    combination = paste(Size, Status, sep = "_")
+  )
+
+# Print R-squared values
+print(r_squared)
+```
+
 
 
 

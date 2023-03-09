@@ -148,6 +148,10 @@ r_squared <- data %>%
 print(r_squared)
 ```
 
+## Exercise 6
+
+the slopes for all four combinations of "size" and "migratory status" are not equal. The slopes for L_M (large, migrant) and S_R (small, resident) are 0.3140588 and 0.3223100 respectively, while the slopes for L_R (large, resident) and S_M (small, migrant) are 0.1594522 and 0.2051952 respectively. This indicates that there are differences in the relationship between the number of pairs and time until extinction across the four combinations of size and migratory status.
+
 
 
 

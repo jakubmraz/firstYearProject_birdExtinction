@@ -6,3 +6,5 @@ The log transformation of the "time" variable is already done, but there is no c
 In summary, based on the given information, there is no apparent reason to transform the "pairs" variable in this dataset, and there is no need to assess linear relationships between log("time") and "pairs."
 
 Rewrite using your own words:
+
+Firstly we need to understand the motivation behind transforming a variable. Transformation of a variable is often done to linearize a relationship between two variables which is not linear in its original form. However, in this question we are specifically asked to assess whether there are linear relationships between log('time') and 'pairs' in all possible combinations of 'size' and 'migratory status'.

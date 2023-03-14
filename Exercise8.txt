@@ -1,0 +1,2 @@
+lm(log(Time) ~ Pairs:Size)
+

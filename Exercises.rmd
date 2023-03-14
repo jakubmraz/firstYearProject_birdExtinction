@@ -1,0 +1,427 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+## Exercise 1
+
+Begin with describing and fitting a full model in which the intercepts
+and slopes of the extinction times versus numbers of pairs may be
+different in all four combinations of size and migratory status.
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+```
+
+```{r, echo=FALSE}
+# Load the dataset
+bird_data <- read.csv("data.csv")
+
+# Fit the full model
+full_model <- lm(Time ~ Pairs * Size * Status, data = bird_data)
+
+# Display the summary of the model
+summary(full_model)
+```
+
+```{r, echo=FALSE}
+# Add the fitted values to the dataset
+bird_data$fitted_values <- fitted(full_model)
+
+# Plot the data with fitted lines
+ggplot(bird_data, aes(x = Pairs, y = Time, color = interaction(Size, Status))) +
+  geom_point() +
+  geom_line(aes(y = fitted_values)) +
+  labs(title = "Extinction Time vs. Number of Pairs",
+       x = "Number of Pairs",
+       y = "Extinction Time (Years)",
+       color = "Size & Status") +
+  theme_minimal()
+```
+
+## Exercise 2
+
+Examine the data set for possible transformations and outliers: Make a
+residual plot from the fit of the model. What can you tell based on the
+residual plot? (i.e. fit of the model/ possible transformations needed +
+outliers)?
+
+```{r, echo=FALSE}
+# Calculate residuals
+bird_data$residuals <- residuals(full_model)
+
+# Create a residual plot
+ggplot(bird_data, aes(x = fitted_values, y = residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(title = "Residual Plot",
+       x = "Fitted Values",
+       y = "Residuals") +
+  theme_minimal()
+```
+
+When examining the residuals, we look for:
+
+1.  Homoscedasticity: The residuals should have constant variance across
+    the range of fitted values. If the spread of residuals seems to
+    change across the fitted values, a transformation may be needed.
+
+The variance of the residuals becomes bigger and bigger as the value
+being fitted (number of pairs + extinction time) goes up.
+
+2.  Independence: There should be no patterns or trends in the
+    residuals. If you notice any patterns or trends, it might indicate
+    that a variable is missing from the model, or a transformation is
+    needed.
+
+There appears to be a slight downward slope pattern.
+
+3.  Outliers: Look for points that stand out from the rest, as they may
+    be outliers. Investigate these points further to determine if they
+    are errors or if they represent genuine observations. You may
+    consider removing outliers if they are affecting the model's
+    performance.
+
+Biggest outlier:
+
+-   Species: Raven
+-   Time: 58.82
+-   Pairs: 2.35
+-   Size: L
+-   Status: R
+
+4.  Normality: Ideally, the residuals should be approximately normally
+    distributed. If the residuals exhibit a non-normal distribution, you
+    may need to consider a transformation of the dependent variable or
+    use a different modeling approach.
+
+```{r, echo=FALSE}
+# Calculate standardized residuals
+bird_data$std_residuals <- rstandard(full_model)
+
+# Create Q-Q plot
+ggplot(bird_data, aes(sample = std_residuals)) +
+  stat_qq() +
+  stat_qq_line() +
+  labs(title = "Q-Q Plot of Standardized Residuals",
+       x = "Theoretical Quantiles",
+       y = "Sample Quantiles") +
+  theme_minimal()
+```
+
+The residuals appear to be normally distributed except for the lower and
+upper ends, where they become more skewed, this suggests that a data
+transformation may be necessarry.
+
+## Exercise 3
+
+```{r, echo=FALSE}
+# Fit the full model with log transformation
+log_model <- lm(log(Time) ~ Pairs * Size * Status, data = bird_data)
+
+# Fit the full model with square root transformation
+sqrt_model <- lm(sqrt(Time) ~ Pairs * Size * Status, data = bird_data)
+
+# Fit the full model with reciprocal transformation
+reciprocal_model <- lm(I(1 / Time) ~ Pairs * Size * Status, data = bird_data)
+
+# Calculate residuals
+bird_data$log_residuals <- residuals(log_model)
+bird_data$sqrt_residuals <- residuals(sqrt_model)
+bird_data$reciprocal_residuals <- residuals(reciprocal_model)
+```
+
+```{r, echo=FALSE}
+# Log transformation residual plot
+ggplot(bird_data, aes(x = fitted(log_model), y = log_residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(title = "Residual Plot (Log Transformation)",
+       x = "Fitted Values",
+       y = "Residuals") +
+  theme_minimal()
+```
+
+```{r, echo=FALSE}
+# Square root transformation residual plot
+ggplot(bird_data, aes(x = fitted(sqrt_model), y = sqrt_residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(title = "Residual Plot (Square Root Transformation)",
+       x = "Fitted Values",
+       y = "Residuals") +
+  theme_minimal()
+```
+
+```{r, echo=FALSE}
+# Log transformation residual plot
+ggplot(bird_data, aes(x = fitted(reciprocal_model), y = reciprocal_residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(title = "Residual Plot (Reciprocal Transformation)",
+       x = "Fitted Values",
+       y = "Residuals") +
+  theme_minimal()
+```
+
+Immediately, we can tell that the square transformation does not improve
+the model. To compare the log and reciprocal transformation, we will use
+Q-Q plots again.
+
+```{r, echo=FALSE}
+# Calculate standardized residuals
+bird_data$std_log_residuals <- rstandard(log_model)
+bird_data$std_reciprocal_residuals <- rstandard(reciprocal_model)
+```
+
+```{r, echo=FALSE}
+# Create Q-Q plot for the Log Model
+ggplot(bird_data, aes(sample = std_log_residuals)) +
+  stat_qq() +
+  stat_qq_line() +
+  labs(title = "Q-Q Plot of Standardized Residuals for the Log Transformed Model",
+       x = "Theoretical Quantiles",
+       y = "Sample Quantiles") +
+  theme_minimal()
+```
+
+```{r, echo=FALSE}
+# Create Q-Q plot for the Reciprocal Model
+ggplot(bird_data, aes(sample = std_reciprocal_residuals)) +
+  stat_qq() +
+  stat_qq_line() +
+  labs(title = "Q-Q Plot of Standardized Residuals for the Reciprocal Transformed Model",
+       x = "Theoretical Quantiles",
+       y = "Sample Quantiles") +
+  theme_minimal()
+```
+
+Based on the Q-Q plots, the log transformation seems to be the best fit
+for the majority of the fitted data points.
+
+## Exercise 4
+
+Outliers can have a significant impact on the results of a statistical
+analysis, including regression models. There is one outlier with nearly
+60 years before extinction and possibly other outliers at the other end
+of the scale. Here's how these outliers can affect the results:
+
+1.  Influence on model parameters: Outliers can skew the estimates of
+    the regression coefficients, resulting in biased estimates of the
+    relationship between the independent and dependent variables. This
+    can lead to incorrect conclusions about the strength and direction
+    of the associations.
+
+2.  Reduced model accuracy: Outliers can increase the overall error in
+    the model, reducing its accuracy and predictive power. This can make
+    it difficult to generalize the model to new data or other similar
+    situations.
+
+3.  Distortion of the residual distribution: Outliers can cause the
+    residuals to deviate from normality, violating the assumptions of
+    linear regression models. This can affect the reliability of
+    hypothesis tests and confidence intervals derived from the model.
+
+Despite these potential issues, there might be valid reasons to keep the
+outliers in the dataset:
+
+1.  Real-world representation: If the outliers are genuine observations
+    and not a result of data entry errors or other mistakes, they may
+    represent important real-world phenomena that should be considered
+    in the analysis. Removing them could lead to an incomplete or biased
+    understanding of the underlying processes.
+
+2.  Insight into extreme cases: Outliers can provide valuable insights
+    into the behavior of the system under extreme conditions. By keeping
+    them in the dataset, you can learn more about how the system
+    responds when pushed to its limits.
+
+3.  Robustness of the model: Including outliers in the analysis can help
+    assess the robustness of the model. If the model can account for the
+    presence of outliers and still provide meaningful results, it
+    demonstrates the model's ability to handle a wider range of
+    situations.
+
+In conclusion, it is essential to carefully assess the potential impact
+of outliers on the analysis and consider their potential benefits before
+deciding whether to keep them in the dataset. In some cases, it might be
+necessary to use robust statistical methods or other techniques to
+account for the presence of outliers and minimize their influence on the
+results.
+
+## Exercise 5
+
+```{r, echo=FALSE}
+# Create a new variable for log-transformed time
+bird_data$log_time <- log(bird_data$Time)
+
+# Create scatterplots for each combination of size and migratory status
+ggplot(bird_data, aes(x = Pairs, y = log_time, color = Status)) +
+  geom_point() +
+  facet_wrap(~ Size) +
+  labs(title = "Scatterplots of Log(Time) vs. Pairs",
+       x = "Pairs",
+       y = "Log(Time)") +
+  theme_minimal()
+```
+
+The relationship between log(Time) and Pairs does appear to be a
+positive linear relationship, thus indicating that a transformation of
+Pairs is not needed.
+
+The relationship also appears to be more linear than with
+log-transformed Pairs, as shown below, where a slight curve pattern
+emerges.
+
+```{r, echo=FALSE}
+# Create a new variable for log-transformed time
+bird_data$log_pairs <- log(bird_data$Pairs)
+
+# Create scatterplots for each combination of size and migratory status
+ggplot(bird_data, aes(x = log_pairs, y = log_time, color = Status)) +
+  geom_point() +
+  facet_wrap(~ Size) +
+  labs(title = "Scatterplots of Log(Time) vs. Log(Pairs)",
+       x = "Log(Pairs)",
+       y = "Log(Time)") +
+  theme_minimal()
+```
+
+## Exercise 6
+
+### 6.1
+
+```{r, echo=FALSE}
+summary(log_model)
+```
+
+After running this code, you will see the coefficients for each term in
+the model, including the interactions. To determine whether the slopes
+are equal for all combinations of "size" and "migratory status," examine
+the coefficients for the interaction terms Pairs:Size, Pairs:Status, and
+Pairs:Size:Status. If the interaction terms are not statistically
+significant (i.e., their p-values are larger than a chosen significance
+level, typically 0.05), it suggests that the slopes are not
+significantly different between the four combinations of "size" and
+"migratory status."
+
+Pairs:SizeS: The coefficient is -0.1089 with a p-value of 0.5266, which
+is not statistically significant at a 0.05 significance level.
+
+Pairs:StatusR: The coefficient is -0.1546 with a p-value of 0.2790,
+which is not statistically significant at a 0.05 significance level.
+
+Pairs:SizeS:StatusR: The coefficient is 0.2717 with a p-value of 0.1629,
+which is not statistically significant at a 0.05 significance level.
+
+Since none of the interaction terms are statistically significant, there
+is not enough evidence to conclude that the slopes for all four
+combinations of "size" and "migratory status" are different. This
+suggests that the relationship between "Pairs" and log("Time") may not
+be significantly different among the four groups based on "size" and
+"migratory status". However, it is essential to note that a lack of
+statistical significance does not necessarily mean the slopes are equal;
+it indicates that there isn't enough evidence to reject the null
+hypothesis that the slopes are equal.
+
+### 6.2
+
+Nested models are a series of models where each model is a subset of the
+previous one. This approach helps in assessing the contribution of
+variables and their interactions to the overall model fit. To create
+nested models, start with the simplest model and gradually add variables
+and interaction terms to evaluate their contributions.
+
+```{r, echo=FALSE}
+# Fit the nested models
+model1 <- lm(log(Time) ~ Pairs, data = bird_data)
+model2 <- lm(log(Time) ~ Pairs + Size, data = bird_data)
+model3 <- lm(log(Time) ~ Pairs + Size + Status, data = bird_data)
+model4 <- lm(log(Time) ~ Pairs * Size + Status, data = bird_data)
+model5 <- lm(log(Time) ~ Pairs * Size * Status, data = bird_data)
+
+# Perform an ANOVA to compare the nested models
+anova(model1, model2, model3, model4, model5)
+```
+
+When we move from Model 1 to Model 2 (adding the Size variable), the
+p-value is 0.000181 (significant at the 0.05 level). This indicates that
+adding the Size variable significantly improves the model fit.
+
+When we move from Model 2 to Model 3 (adding the Status variable), the
+p-value is 0.007825 (significant at the 0.05 level). This suggests that
+adding the Status variable significantly improves the model fit.
+
+When we move from Model 3 to Model 4 (adding the Pairs \* Size
+interaction term), the p-value is 0.202995 (not significant at the 0.05
+level). This suggests that adding the Pairs \* Size interaction term
+does not significantly improve the model fit.
+
+When we move from Model 4 to Model 5 (adding the Pairs \* Size \* Status
+interaction term), the p-value is 0.493550 (not significant at the 0.05
+level). This indicates that adding the Pairs \* Size \* Status
+interaction term does not significantly improve the model fit.
+
+Based on the ANOVA results, it seems that Model 3 (Time \~ Pairs +
+Size + Status) is the most appropriate model for this dataset, as adding
+interaction terms does not significantly improve the model fit.
+
+## Exercise 7
+
+Based on the findings from previous items, we can create a reduced model
+using just the Pairs, Size, and Status variables, without interaction
+terms.
+
+```{r, echo=FALSE}
+# Reduced Model
+reduced_model <- lm(log(Time) ~ Pairs + Size + Status, data = bird_data)
+
+# Summary of the reduced model
+summary(reduced_model)
+```
+
+```{r, echo=FALSE}
+# Add the fitted values to the dataset
+bird_data$reduced_fitted_values <- fitted(reduced_model)
+
+# Plot the data with fitted lines
+ggplot(bird_data, aes(x = Pairs, y = Time, color = interaction(Size, Status))) +
+  geom_point() +
+  geom_line(aes(y = reduced_fitted_values)) +
+  labs(title = "Extinction Time vs. Number of Pairs",
+       x = "Number of Pairs",
+       y = "Extinction Time (Years)",
+       color = "Size & Status") +
+  theme_minimal()
+```
+
+## Exercise 8
+
+After analyzing the data and accounting for the number of nesting pairs,
+we can conclude that the number of nesting pairs has a significant
+impact on the time it takes for a species to become extinct. Larger
+numbers of nesting pairs tend to result in longer times before
+extinction.
+
+However, when considering the size and migratory status of species,
+their individual effects on extinction time are less clear. We could not
+establish a strong relationship between these factors and the time to
+extinction, indicating that they may not be as influential as the number
+of nesting pairs.
+
+It is also worth noting that there were a few outliers with unusually
+large extinction times compared to other species with similar
+explanatory variable values. These outliers should be further
+investigated to understand the underlying factors contributing to their
+atypical extinction times.
+
+Biggest outlier:
+
+-   Species: Raven
+-   Time: 58.82
+-   Pairs: 2.35
+-   Size: L
+-   Status: R

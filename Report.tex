@@ -4,31 +4,34 @@
 
 \begin{document}
 \title{Factors Affecting Extinction}
+
 \begin{figure}
     \includegraphics[width=\linewidth]{ITU.jpg}
 \end{figure}
 \maketitle
 \author{Rinalds Lipenitis \and Jakub Mráz \and
 Adam Rosenørn \and Costel Gutu \and Richard Kentoš}
+\begin{center}
 \date{March 2023}
+\end{center}
 
 \newpage
 
 \section{Exercise 1}
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{tables/all-multiplied.png}
-\end{figure}
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/graph1.png}
-\end{figure}
+\includegraphics[scale=0.5]{tables/all-multiplied.png}
+
+
+\begin{center}
+\includegraphics[scale=0.5]{graphs/graph1.png}
+\end{center}
 
 \section{Exercise 2}
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/residual.png}
-\end{figure}
+\begin{center}
+\includegraphics[scale=0.5]{graphs/residual.png}
+\end{center}
 
 
 When examining the residuals, we look for:
@@ -49,36 +52,28 @@ Size: L
 Status: R
 Normality: Ideally, the residuals should be approximately normally distributed. If the residuals exhibit a non-normal distribution, you may need to consider a transformation of the dependent variable or use a different modeling approach.
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/qq-residuals.png}
-\end{figure}
+\begin{center}
+\includegraphics[scale=0.5]{graphs/qq-residuals.png}
+\end{center}
 
 The residuals appear to be normally distributed except for the lower and upper ends, where they become more skewed, this suggests that a data transformation may be necessarry.
 
 
 \section{Exercise 3}
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/graph-log.png}
-\end{figure}
+\begin{center}
+\includegraphics[scale=0.5]{graphs/graph-log.png}
+\end{center}
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/graph-sqrt.png}
-\end{figure}
+\begin{center}
+\includegraphics[scale=0.5]{graphs/graph-sqrt.png}
+\end{center}
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/graph-over.png}
-\end{figure}
+\begin{center}
+\includegraphics[scale=0.5]{graphs/graph-over.png}
+\end{center}
 
 Immediately, we can tell that the square transformation does not improve the model. To compare the log and reciprocal transformation, we will use Q-Q plots again.
-
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/qq-log-time.png}
-\end{figure}
-
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/qq-reciprocal.png}
-\end{figure}
 
 Based on the Q-Q plots, the log transformation seems to be the best fit for the majority of the fitted data points.
 
@@ -99,27 +94,23 @@ We therefore think that is is inevitable to keep outliers in our dataset and car
 \section{Exercise 5}
 Firstly we need to understand the motivation behind transforming a variable. Transformation of a variable is often done to linearize a relationship between two variables which is not linear in its original form. However, in this question we are specifically asked to assess whether there are linear relationships between log('time') and 'pairs' in all possible combinations of 'size' and 'migratory status'.
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/graph5.png}
-\end{figure}
+\begin{center}
+\includegraphics[scale=0.5]{graphs/graph5.png}
+\end{center}
 
 The relationship between log(Time) and Pairs does appear to be a positive linear relationship, thus indicating that a transformation of Pairs is not needed.
 
 The relationship also appears to be more linear than with log-transformed Pairs, as shown below, where a slight curve pattern emerges.
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/logtime-logpairs.png}
-\end{figure}
 
 
 \section{Exercise 6}
 
 \subsection*{6.1}
 
-
-\begin{figure}
-    \includegraphics[width=\linewidth]{tables/log-time.png}
-\end{figure}
+\begin{center}
+\includegraphics[scale=0.5]{tables/log-time.png}
+\end{center}
 
 
 After running this code, you will see the coefficients for each term in the model, including the interactions. To determine whether the slopes are equal for all combinations of “size” and “migratory status,” examine the coefficients for the interaction terms Pairs:Size, Pairs:Status, and Pairs:Size:Status. If the interaction terms are not statistically significant (i.e., their p-values are larger than a chosen significance level, typically 0.05), it suggests that the slopes are not significantly different between the four combinations of “size” and “migratory status.”
@@ -135,9 +126,9 @@ Since none of the interaction terms are statistically significant, there is not 
 \subsection*{6.2}
 Nested models are a series of models where each model is a subset of the previous one. This approach helps in assessing the contribution of variables and their interactions to the overall model fit. To create nested models, start with the simplest model and gradually add variables and interaction terms to evaluate their contributions.
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{tables/variance-table.png}
-\end{figure}
+
+\includegraphics[scale=0.5]{tables/variance-table.png}
+
 
 When we move from Model 1 to Model 2 (adding the Size variable), the p-value is 0.000181 (significant at the 0.05 level). This indicates that adding the Size variable significantly improves the model fit.
 
@@ -152,13 +143,13 @@ Based on the ANOVA results, it seems that Model 3 (Time ~ Pairs + Size + Status)
 \section{Exercise 7}
 Based on the findings from previous items, we can create a reduced model using just the Pairs, Size, and Status variables, without interaction terms.
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{tables/all-added.png}
-\end{figure}
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{graphs/graph7.png}
-\end{figure}
+\includegraphics[scale=0.5]{tables/all-added.png}
+
+
+\begin{center}
+\includegraphics[scale=0.5]{graphs/graph7.png}
+\end{center}
 
 \section{Exercise 8}
 

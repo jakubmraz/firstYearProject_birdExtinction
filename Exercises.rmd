@@ -393,7 +393,7 @@ ggplot(bird_data, aes(x = Pairs, y = Time, color = interaction(Size, Status))) +
   geom_line(aes(y = reduced_fitted_values)) +
   labs(title = "Extinction Time vs. Number of Pairs",
        x = "Number of Pairs",
-       y = "Extinction Time (Years)",
+       y = "Natural logarithm of Extinction Time (Years)",
        color = "Size & Status") +
   theme_minimal()
 ```
@@ -430,12 +430,15 @@ Based on the reduced model, the "theoretical" regression formula for the
 logarithm of extinction time can be constructed using the coefficients
 from the summary. The formula would look like this:
 
-$$log(Time) = 0.43056 + 0.26509 * Pairs - 0.65237 * SizeS + 0.50406 *
+$$ln(Time) = 0.43056 + 0.26509 * Pairs - 0.65237 * SizeS + 0.50406 *
 StatusR$$
 
 Here,
 
-log(Time) represents the natural logarithm of the extinction time; Pairs
+ln(Time) represents the natural logarithm of the extinction time
+(note that log()) in R defaults to ln;
+
+Pairs
 is the number of nesting pairs (as a continuous variable);
 
 SizeS is a binary variable indicating the bird size, with 1 for

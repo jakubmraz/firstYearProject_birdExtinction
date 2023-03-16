@@ -15,7 +15,10 @@ Adam Rosenørn \and Costel Gutu \and Richard Kentoš}
 \newpage
 
 \section{Exercise 1}
-In exercise 1 we fitted 
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{tables/all-multiplied.png}
+\end{figure}
 
 \begin{figure}
     \includegraphics[width=\linewidth]{graphs/graph1.png}
@@ -113,7 +116,10 @@ The relationship also appears to be more linear than with log-transformed Pairs,
 
 \subsection*{6.1}
 
-% TABLEEEEEEEEEEE
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{tables/log-time.png}
+\end{figure}
 
 
 After running this code, you will see the coefficients for each term in the model, including the interactions. To determine whether the slopes are equal for all combinations of “size” and “migratory status,” examine the coefficients for the interaction terms Pairs:Size, Pairs:Status, and Pairs:Size:Status. If the interaction terms are not statistically significant (i.e., their p-values are larger than a chosen significance level, typically 0.05), it suggests that the slopes are not significantly different between the four combinations of “size” and “migratory status.”
@@ -129,7 +135,9 @@ Since none of the interaction terms are statistically significant, there is not 
 \subsection*{6.2}
 Nested models are a series of models where each model is a subset of the previous one. This approach helps in assessing the contribution of variables and their interactions to the overall model fit. To create nested models, start with the simplest model and gradually add variables and interaction terms to evaluate their contributions.
 
-% TABLEEEEEEEEEEE
+\begin{figure}
+    \includegraphics[width=\linewidth]{tables/variance-table.png}
+\end{figure}
 
 When we move from Model 1 to Model 2 (adding the Size variable), the p-value is 0.000181 (significant at the 0.05 level). This indicates that adding the Size variable significantly improves the model fit.
 
@@ -144,27 +152,76 @@ Based on the ANOVA results, it seems that Model 3 (Time ~ Pairs + Size + Status)
 \section{Exercise 7}
 Based on the findings from previous items, we can create a reduced model using just the Pairs, Size, and Status variables, without interaction terms.
 
-% TABLEEEEEEEEEEE
-
+\begin{figure}
+    \includegraphics[width=\linewidth]{tables/all-added.png}
+\end{figure}
 
 \begin{figure}
     \includegraphics[width=\linewidth]{graphs/graph7.png}
 \end{figure}
 
 \section{Exercise 8}
-After analyzing the data and accounting for the number of nesting pairs, we can conclude that the number of nesting pairs has a significant impact on the time it takes for a species to become extinct. Larger numbers of nesting pairs tend to result in longer times before extinction.
 
-However, when considering the size and migratory status of species, their individual effects on extinction time are less clear. We could not establish a strong relationship between these factors and the time to extinction, indicating that they may not be as influential as the number of nesting pairs.
+After analyzing the data and accounting for the number of nesting pairs,
+we can conclude that the number of nesting pairs has a significant
+impact on the time it takes for a species to become extinct. Larger
+numbers of nesting pairs tend to result in longer times before
+extinction.
 
-It is also worth noting that there were a few outliers with unusually large extinction times compared to other species with similar explanatory variable values. These outliers should be further investigated to understand the underlying factors contributing to their atypical extinction times.
+However, when considering the size and migratory status of species,
+their individual effects on extinction time are less clear. We could not
+establish a strong relationship between these factors and the time to
+extinction, indicating that they may not be as influential as the number
+of nesting pairs.
+
+It is also worth noting that there were a few outliers with unusually
+large extinction times compared to other species with similar
+explanatory variable values. These outliers should be further
+investigated to understand the underlying factors contributing to their
+atypical extinction times.
 
 Biggest outlier:
 
-Species: Raven
-Time: 58.82
-Pairs: 2.35
-Size: L
-Status: R
+-   Species: Raven
+-   Time: 58.82
+-   Pairs: 2.35
+-   Size: L
+-   Status: R
+
+Based on the reduced model, the "theoretical" regression formula for the
+logarithm of extinction time can be constructed using the coefficients
+from the summary. The formula would look like this:
+
+$$ln(Time) = 0.43056 + 0.26509 * Pairs - 0.65237 * SizeS + 0.50406 *
+StatusR$$
+
+Here,
+
+ln(Time) represents the natural logarithm of the extinction time (note
+that log() in R defaults to ln);
+
+Pairs is the number of nesting pairs (as a continuous variable);
+
+SizeS is a binary variable indicating the bird size, with 1 for
+small-sized birds and 0 for large-sized birds;
+
+StatusR is a binary variable indicating the migratory status, with 1 for
+resident birds and 0 for migratory birds.
+
+The coefficients in the formula represent the effects of each variable
+on the logarithm of the extinction time while keeping the other
+variables constant.
+
+For example, an increase in the number of nesting pairs by one unit is
+associated with an increase in the logarithm of extinction time by
+0.26509 units, holding size and migratory status constant. Similarly,
+small-sized birds have a 0.65237 units lower logarithm of extinction
+time compared to large-sized birds, holding the number of nesting pairs
+and migratory status constant.
+
+This formula can be used as a conclusion to describe the relationship
+between the extinction time and the variables of interest (number of
+nesting pairs, size, and migratory status) based on the reduced model.
 
 
 

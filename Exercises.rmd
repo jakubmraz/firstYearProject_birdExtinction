@@ -435,11 +435,10 @@ StatusR$$
 
 Here,
 
-ln(Time) represents the natural logarithm of the extinction time
-(note that log()) in R defaults to ln;
+ln(Time) represents the natural logarithm of the extinction time (note
+that log() in R defaults to ln);
 
-Pairs
-is the number of nesting pairs (as a continuous variable);
+Pairs is the number of nesting pairs (as a continuous variable);
 
 SizeS is a binary variable indicating the bird size, with 1 for
 small-sized birds and 0 for large-sized birds;

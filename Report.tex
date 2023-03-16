@@ -17,9 +17,67 @@ Adam Rosenørn \and Costel Gutu \and Richard Kentoš}
 \section{Exercise 1}
 In exercise 1 we fitted 
 
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/graph1.png}
+\end{figure}
+
 \section{Exercise 2}
 
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/residual.png}
+\end{figure}
+
+
+When examining the residuals, we look for:
+
+Homoscedasticity: The residuals should have constant variance across the range of fitted values. If the spread of residuals seems to change across the fitted values, a transformation may be needed.
+The variance of the residuals becomes bigger and bigger as the value being fitted (number of pairs + extinction time) goes up.
+
+Independence: There should be no patterns or trends in the residuals. If you notice any patterns or trends, it might indicate that a variable is missing from the model, or a transformation is needed.
+There appears to be a slight downward slope pattern.
+
+Outliers: Look for points that stand out from the rest, as they may be outliers. Investigate these points further to determine if they are errors or if they represent genuine observations. You may consider removing outliers if they are affecting the model’s performance.
+Biggest outlier:
+
+Species: Raven
+Time: 58.82
+Pairs: 2.35
+Size: L
+Status: R
+Normality: Ideally, the residuals should be approximately normally distributed. If the residuals exhibit a non-normal distribution, you may need to consider a transformation of the dependent variable or use a different modeling approach.
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/qq-residuals.png}
+\end{figure}
+
+The residuals appear to be normally distributed except for the lower and upper ends, where they become more skewed, this suggests that a data transformation may be necessarry.
+
+
 \section{Exercise 3}
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/graph-log.png}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/graph-sqrt.png}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/graph-over.png}
+\end{figure}
+
+Immediately, we can tell that the square transformation does not improve the model. To compare the log and reciprocal transformation, we will use Q-Q plots again.
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/qq-log-time.png}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/qq-reciprocal.png}
+\end{figure}
+
+Based on the Q-Q plots, the log transformation seems to be the best fit for the majority of the fitted data points.
 
 \section{Exercise 4}
 Results can be significantly impacted by the outlier in each end of the scale. Outliers can also affect the measures of the central tendency, more specifically mean, median and mode. Moreover, they can also affect standard deviation and range - the spread of the data.
@@ -38,28 +96,77 @@ We therefore think that is is inevitable to keep outliers in our dataset and car
 \section{Exercise 5}
 Firstly we need to understand the motivation behind transforming a variable. Transformation of a variable is often done to linearize a relationship between two variables which is not linear in its original form. However, in this question we are specifically asked to assess whether there are linear relationships between log('time') and 'pairs' in all possible combinations of 'size' and 'migratory status'.
 
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/graph5.png}
+\end{figure}
+
+The relationship between log(Time) and Pairs does appear to be a positive linear relationship, thus indicating that a transformation of Pairs is not needed.
+
+The relationship also appears to be more linear than with log-transformed Pairs, as shown below, where a slight curve pattern emerges.
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/logtime-logpairs.png}
+\end{figure}
+
 
 \section{Exercise 6}
 
+\subsection*{6.1}
+
+% TABLEEEEEEEEEEE
+
+
+After running this code, you will see the coefficients for each term in the model, including the interactions. To determine whether the slopes are equal for all combinations of “size” and “migratory status,” examine the coefficients for the interaction terms Pairs:Size, Pairs:Status, and Pairs:Size:Status. If the interaction terms are not statistically significant (i.e., their p-values are larger than a chosen significance level, typically 0.05), it suggests that the slopes are not significantly different between the four combinations of “size” and “migratory status.”
+
+Pairs:SizeS: The coefficient is -0.1089 with a p-value of 0.5266, which is not statistically significant at a 0.05 significance level.
+
+Pairs:StatusR: The coefficient is -0.1546 with a p-value of 0.2790, which is not statistically significant at a 0.05 significance level.
+
+Pairs:SizeS:StatusR: The coefficient is 0.2717 with a p-value of 0.1629, which is not statistically significant at a 0.05 significance level.
+
+Since none of the interaction terms are statistically significant, there is not enough evidence to conclude that the slopes for all four combinations of “size” and “migratory status” are different. This suggests that the relationship between “Pairs” and log(“Time”) may not be significantly different among the four groups based on “size” and “migratory status”. However, it is essential to note that a lack of statistical significance does not necessarily mean the slopes are equal; it indicates that there isn’t enough evidence to reject the null hypothesis that the slopes are equal.
+
+\subsection*{6.2}
+Nested models are a series of models where each model is a subset of the previous one. This approach helps in assessing the contribution of variables and their interactions to the overall model fit. To create nested models, start with the simplest model and gradually add variables and interaction terms to evaluate their contributions.
+
+% TABLEEEEEEEEEEE
+
+When we move from Model 1 to Model 2 (adding the Size variable), the p-value is 0.000181 (significant at the 0.05 level). This indicates that adding the Size variable significantly improves the model fit.
+
+When we move from Model 2 to Model 3 (adding the Status variable), the p-value is 0.007825 (significant at the 0.05 level). This suggests that adding the Status variable significantly improves the model fit.
+
+When we move from Model 3 to Model 4 (adding the Pairs * Size interaction term), the p-value is 0.202995 (not significant at the 0.05 level). This suggests that adding the Pairs * Size interaction term does not significantly improve the model fit.
+
+When we move from Model 4 to Model 5 (adding the Pairs * Size * Status interaction term), the p-value is 0.493550 (not significant at the 0.05 level). This indicates that adding the Pairs * Size * Status interaction term does not significantly improve the model fit.
+
+Based on the ANOVA results, it seems that Model 3 (Time ~ Pairs + Size + Status) is the most appropriate model for this dataset, as adding interaction terms does not significantly improve the model fit.
+
 \section{Exercise 7}
+Based on the findings from previous items, we can create a reduced model using just the Pairs, Size, and Status variables, without interaction terms.
+
+% TABLEEEEEEEEEEE
+
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{graphs/graph7.png}
+\end{figure}
 
 \section{Exercise 8}
+After analyzing the data and accounting for the number of nesting pairs, we can conclude that the number of nesting pairs has a significant impact on the time it takes for a species to become extinct. Larger numbers of nesting pairs tend to result in longer times before extinction.
+
+However, when considering the size and migratory status of species, their individual effects on extinction time are less clear. We could not establish a strong relationship between these factors and the time to extinction, indicating that they may not be as influential as the number of nesting pairs.
+
+It is also worth noting that there were a few outliers with unusually large extinction times compared to other species with similar explanatory variable values. These outliers should be further investigated to understand the underlying factors contributing to their atypical extinction times.
+
+Biggest outlier:
+
+Species: Raven
+Time: 58.82
+Pairs: 2.35
+Size: L
+Status: R
 
 
-\begin{equation}
-    \hat{y} = \alpha + \beta X_{HDI}
-\end{equation}
-$$\hat{y} = \alpha + \beta X_{HDI}$$
-
-The three types of males:
-\begin{enumerate}
-    \item $\exists$
-    \item $\forall$
-    \item $\Sigma$
-\end{enumerate}
-
-$$\sum_{i=1} ^{\infty}{2i}$$
 
 
-$$Height of children = \alpha + \beta *{height of parent} + \gamma *{diet} + \delta{pollution} + \epsilon$$
 \end{document}

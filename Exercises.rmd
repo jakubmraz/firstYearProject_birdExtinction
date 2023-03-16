@@ -425,3 +425,36 @@ Biggest outlier:
 -   Pairs: 2.35
 -   Size: L
 -   Status: R
+
+Based on the reduced model, the "theoretical" regression formula for the
+logarithm of extinction time can be constructed using the coefficients
+from the summary. The formula would look like this:
+
+$$log(Time) = 0.43056 + 0.26509 * Pairs - 0.65237 * SizeS + 0.50406 *
+StatusR$$
+
+Here,
+
+log(Time) represents the natural logarithm of the extinction time; Pairs
+is the number of nesting pairs (as a continuous variable);
+
+SizeS is a binary variable indicating the bird size, with 1 for
+small-sized birds and 0 for large-sized birds;
+
+StatusR is a binary variable indicating the migratory status, with 1 for
+resident birds and 0 for migratory birds.
+
+The coefficients in the formula represent the effects of each variable
+on the logarithm of the extinction time while keeping the other
+variables constant.
+
+For example, an increase in the number of nesting pairs by one unit is
+associated with an increase in the logarithm of extinction time by
+0.26509 units, holding size and migratory status constant. Similarly,
+small-sized birds have a 0.65237 units lower logarithm of extinction
+time compared to large-sized birds, holding the number of nesting pairs
+and migratory status constant.
+
+This formula can be used as a conclusion to describe the relationship
+between the extinction time and the variables of interest (number of
+nesting pairs, size, and migratory status) based on the reduced model.

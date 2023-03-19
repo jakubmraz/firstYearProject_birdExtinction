@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage{wrapfig}
+\usepackage{amsmath,amssymb}
 
 \begin{document}
 \title{Factors Affecting Extinction}
@@ -28,15 +29,38 @@ The risk of extinction among bird species has become an increasing concern for c
 Previous research suggests that species with a large number of nesting pairs tend to remain longer before becoming extinct. In this study, we aim to investigate whether bird size and migratory status also play a role in extinction times, after accounting for the number of nesting pairs. Additionally, we identify species with unusually small or large extinction times compared to other species with similar values for the explanatory variables. This information can help conservationists understand the underlying factors contributing to bird extinction and develop targeted strategies to protect vulnerable species.
 
 \section{Fitting the Full Model (ex. 1)}
-To begin with, we fitted the full model with all interactions between the variables present, allowing us to investigate the possible effects of these interactions,
-and deciding whether they are statistically significant or not. This model assigns the value 1 to the Resident and Small categories and 0 to their counterparts.
-
-\includegraphics[scale=0.5]{tables/all-multiplied.png}
-
-
+To begin with, we fitted the full model with all interactions between the variables present, allowing us to investigate the possible effects of these interactions, and deciding whether they are statistically significant or not. This model assigns the value 1 to the Resident and Small categories and 0 to their counterparts.
 \begin{center}
 \includegraphics[scale=0.5]{graphs/graph1.png}
 \end{center}
+
+
+$Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \beta_7 x_1 x_2 x_3 +e_i$
+where, 
+
+\[\begin{aligned} 
+        x_2 & = 
+         \begin{cases}
+             0 &  \text{if, Size  = Large }\\
+             1 &  \text{if, Size = Small }   
+         \end{cases}\\[3pt]
+          \label{equ:yannibel}
+       \end{aligned} 
+       \]
+\[\begin{aligned} 
+        x_3 & = 
+         \begin{cases}
+             0 &  \text{if, migratory status  = migrant }\\
+             1 &  \text{if, migratory status  = resident }   
+         \end{cases}\\[3pt]
+          \label{equ:yannibel}
+       \end{aligned} 
+       \]
+\begin{center}
+\includegraphics[scale=0.5]{graph1.png}
+\end{center}
+
+
 
 \section{Examining the Residuals (ex. 2)}
 
@@ -132,17 +156,17 @@ The first method was analysis the R-generated summary of our full model.
 
 To determine whether the slopes are equal for all combinations of “size” and “migratory status,” we examined the coefficients for the interaction terms Pairs:Size, Pairs:Status, and Pairs:Size:Status. If the interaction terms are not statistically significant (i.e., their p-values are larger than a chosen significance level, typically 0.05), it suggests that the slopes are not significantly different between the four combinations of “size” and “migratory status.” \\
 
-Pairs:SizeS: The coefficient is -0.1089 with a p-value of 0.5266, which is not statistically significant at a 0.05 significance level. \\
+Pairs:SizeS: The coefficient is -0.1089 with a $p$ value of 0.5266, which is not statistically significant at a 0.05 significance level. \\
 
-Pairs:StatusR: The coefficient is -0.1546 with a p-value of 0.2790, which is not statistically significant at a 0.05 significance level. \\
+Pairs:StatusR: The coefficient is -0.1546 with a $p$ value of 0.2790, which is not statistically significant at a 0.05 significance level. \\
 
-Pairs:SizeS:StatusR: The coefficient is 0.2717 with a p-value of 0.1629, which is not statistically significant at a 0.05 significance level. \\
+Pairs:SizeS:StatusR: The coefficient is 0.2717 with a $p$ value of 0.1629, which is not statistically significant at a 0.05 significance level. \\
 
 Since none of the interaction terms are statistically significant, there is not enough evidence to conclude that the slopes for all four combinations of “size” and “migratory status” are different. This suggests that the relationship between “Pairs” and log(“Time”) may not be significantly different among the four groups based on “size” and “migratory status”. However, it is essential to note that a lack of statistical significance does not necessarily mean the slopes are equal; it indicates that there isn’t enough evidence to reject the null hypothesis that the slopes are equal.
 
 \subsection*{6.2}
 
-The second method was using nested models and R's ANOVA analysis.
+The second method was nested models where we compared their fit using R's ANOVA analysis their adjusted $R^2$ in order to compare .
 
 Nested models are a series of models where each model is a subset of the previous one. This approach helps in assessing the contribution of variables and their interactions to the overall model fit. To create nested models, start with the simplest model and gradually add variables and interaction terms to evaluate their contributions.
 
@@ -150,26 +174,27 @@ Nested models are a series of models where each model is a subset of the previou
 \includegraphics[scale=0.5]{tables/variance-table.png}
 
 
-When we move from Model 1 to Model 2 (adding the Size variable), the p-value is 0.000181 (significant at the 0.05 level). This indicates that adding the Size variable significantly improves the model fit.
+When we move from Model 1 to Model 2 (adding the Size variable), the $p$-value is 0.000181 ($< \alpha$) meaning that the difference between the models is statistically significant. The adjusted $R^2$ of Model 2 is 0.4751 compared to Model 1 of 0.4244 meaning that a higher the proportion of variance in the dependent variable that can be explained by the independent variables in the second model.
 
-When we move from Model 2 to Model 3 (adding the Status variable), the p-value is 0.007825 (significant at the 0.05 level). This suggests that adding the Status variable significantly improves the model fit.
+When we move from Model 2 to Model 3 (adding the Status variable), the $p$ value is 0.007825 ($< \alpha$). The small p-value indicates that the models are significantly different. This, coupled with the stronger Adjusted $R^2$ value of 0.5776 suggests that adding the Status variable improves our model
 
-When we move from Model 3 to Model 4 (adding the Pairs * Size interaction term), the p-value is 0.202995 (not significant at the 0.05 level). This suggests that adding the Pairs * Size interaction term does not significantly improve the model fit.
+When we move from Model 3 to Model 4 (adding the Pairs * Size interaction term), the $p$ value is 0.202995 ($>\alpha$  than our 0.05 level). This suggests that the difference between Model 3 and Model 4 is not statistically significant, thus the interaction between the two variables does not improve our model.
 
-When we move from Model 4 to Model 5 (adding the Pairs * Size * Status interaction term), the p-value is 0.493550 (not significant at the 0.05 level). This indicates that adding the Pairs * Size * Status interaction term does not significantly improve the model fit.
+When we move from Model 4 to Model 5 (adding the interaction term between Pairs,  Size and Status ), the $p$ value is 0.493550 ($>\alpha$  than our 0.05 level). This indicates that adding the Pairs * Size * Status interaction term does not significantly improve the model fit.
 
-Based on the ANOVA results, it seems that Model 3 (Time ~ Pairs + Size + Status) is the most appropriate model for this dataset, as adding interaction terms does not significantly improve the model fit.
+Based on the ANOVA results, it seems that Model 3 ($log(Y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3$) is the most appropriate model for this dataset, as adding interaction terms does not significantly improve the model fit.
+
 
 \section{Reducing the Model (ex. 7)}
 Based on the findings from previous items, we can create a reduced model using just the Pairs, Size, and Status variables, without interaction terms.
-
-
-\includegraphics[scale=0.5]{tables/all-added.png}
-
-
 \begin{center}
-\includegraphics[scale=0.5]{graphs/graph7.png}
+\includegraphics[scale=0.5]{graph7.png}
 \end{center}
+\begin{center}
+$log(Y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3$
+\end{center}
+\includegraphics[scale=0.5]{all-added.png}
+
 
 \section{Conclusion (ex. 8)}
 

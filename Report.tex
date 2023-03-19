@@ -17,7 +17,17 @@ Adam Rosenørn \and Costel Gutu \and Richard Kentoš}
 
 \newpage
 
-\section{Exercise 1}
+\section{Abstract}
+
+This study investigates the factors affecting extinction times of bird species on 16 islands around Britain. We analyze a dataset containing measurements on breeding pairs of land-bird species, including the average time of extinction, the average number of nesting pairs, size (large or small), and migratory status (migrant or resident). The primary goal is to determine the impact of these factors on extinction times, while accounting for the number of nesting pairs. Using linear regression models, we identify significant relationships between extinction times and the predictor variables. The study highlights outliers with unusually large extinction times compared to other species.
+
+\section{Introduction}
+
+The risk of extinction among bird species has become an increasing concern for conservationists and ecologists. Understanding the factors that influence extinction times can help guide conservation efforts and prioritize resources. In this study, we analyze a dataset collected from 16 islands around Britain over several decades, focusing on breeding pairs of land-bird species. The dataset includes measurements on the average time of extinction, the average number of nesting pairs, bird size (large or small), and migratory status (migrant or resident).
+
+Previous research suggests that species with a large number of nesting pairs tend to remain longer before becoming extinct. In this study, we aim to investigate whether bird size and migratory status also play a role in extinction times, after accounting for the number of nesting pairs. Additionally, we identify species with unusually small or large extinction times compared to other species with similar values for the explanatory variables. This information can help conservationists understand the underlying factors contributing to bird extinction and develop targeted strategies to protect vulnerable species.
+
+\section{Fitting the Full Model (ex. 1)}
 To begin with, we fitted the full model with all interactions between the variables present, allowing us to investigate the possible effects of these interactions,
 and deciding whether they are statistically significant or not. This model assigns the value 1 to the Resident and Small categorites and 0 to their counterparts.
 
@@ -28,32 +38,30 @@ and deciding whether they are statistically significant or not. This model assig
 \includegraphics[scale=0.5]{graphs/graph1.png}
 \end{center}
 
-\section{Exercise 2}
+\section{Examining the Residuals (ex. 2)}
 
-After fitting this model, we examined it for residuals.
+We examined the dataset for possible transformations and outliers by creating a residual plot from the fit of the full model. Based on this plot, we identified potential issues and assessed the need for data transformations.
 
 \begin{center}
 \includegraphics[scale=0.5]{graphs/residual.png}
 \end{center}
 
 
-When examining the residuals, we look for: \\
+When examining the residuals, we looked for: \\
 
-Homoscedasticity: The residuals should have constant variance across the range of fitted values. If the spread of residuals seems to change across the fitted values, a transformation may be needed.
-The variance of the residuals becomes bigger and bigger as the value being fitted (number of pairs + extinction time) goes up. \\
+Homoscedasticity: The variance of the residuals becomes bigger and bigger as the value
+being fitted (number of pairs + extinction time) goes up.
 
-Independence: There should be no patterns or trends in the residuals. If you notice any patterns or trends, it might indicate that a variable is missing from the model, or a transformation is needed.
-There appears to be a slight downward slope pattern. \\
+Independence: There appears to be a slight downward slope pattern. \\
 
-Outliers: Look for points that stand out from the rest, as they may be outliers. Investigate these points further to determine if they are errors or if they represent genuine observations. You may consider removing outliers if they are affecting the model’s performance. \\
-Biggest outlier: \\
+Biggest Outlier: \\
 Species: Raven \\
 Time: 58.82 \\
 Pairs: 2.35 \\
 Size: L \\
 Status: R \\
 
-Normality: Ideally, the residuals should be approximately normally distributed. If the residuals exhibit a non-normal distribution, you may need to consider a transformation of the dependent variable or use a different modeling approach.
+Normality:
 
 \begin{center}
 \includegraphics[scale=0.5]{graphs/qq-residuals.png}
@@ -62,7 +70,7 @@ Normality: Ideally, the residuals should be approximately normally distributed. 
 The residuals appear to be normally distributed except for the lower and upper ends, where they become more skewed, this suggests that a data transformation may be necessarry.
 
 
-\section{Exercise 3}
+\section{Data Transformation (ex. 3)}
 
 Since it was apparent that some data transformation was necessary, we explored different methods of transforming the time variable, namely logarithmic, quadratic, and reciprocal.
 
@@ -82,7 +90,7 @@ Immediately, we can tell that the square transformation does not improve the mod
 
 Based on the Q-Q plots, the log transformation seems to be the best fit for the majority of the fitted data points.
 
-\section{Exercise 4}
+\section{Approach Towards Outliers (ex. 4)}
 Since there were some large outliers, such as the Raven species, it was important for us to decide our approach towards them.
 
 Results can be significantly impacted by the outlier in each end of the scale. Outliers can also affect the measures of the central tendency, more specifically mean, median and mode. Moreover, they can also affect standard deviation and range - the spread of the data.
@@ -98,7 +106,7 @@ We believe that is is vital for us to keep the outliers in the dataset for vario
 We therefore think that is is inevitable to keep outliers in our dataset and carefully consider how they impact the results. Rather than removing them, it may be better to investigate why they exist in the first place and how they may affect the analysis.
 
 
-\section{Exercise 5}
+\section{Exploring Further Data Transformations (ex. 5)}
 We then explored the possibility of log-transforming the pairs variable. Transformation of a variable is often done to linearize a relationship between two variables which is not linear in its original form. However, in this question we are specifically asked to assess whether there are linear relationships between log('time') and 'pairs' in all possible combinations of 'size' and 'migratory status'.
 
 \begin{center}
@@ -111,7 +119,7 @@ The relationship also appears to be more linear than with log-transformed Pairs,
 
 
 
-\section{Exercise 6}
+\section{Exploring Variable Interactions (ex. 6)}
 
 Next, we did an analysis as to whether the interactions present in our full model were statistically significant enough for us to preserve. This was done with the help of two methods.
 
@@ -152,7 +160,7 @@ When we move from Model 4 to Model 5 (adding the Pairs * Size * Status interacti
 
 Based on the ANOVA results, it seems that Model 3 (Time ~ Pairs + Size + Status) is the most appropriate model for this dataset, as adding interaction terms does not significantly improve the model fit.
 
-\section{Exercise 7}
+\section{Reducing the Model (ex. 7)}
 Based on the findings from previous items, we can create a reduced model using just the Pairs, Size, and Status variables, without interaction terms.
 
 
@@ -163,7 +171,7 @@ Based on the findings from previous items, we can create a reduced model using j
 \includegraphics[scale=0.5]{graphs/graph7.png}
 \end{center}
 
-\section{Exercise 8}
+\section{Conclusion (ex. 8)}
 
 After analyzing the data and accounting for the number of nesting pairs,
 we can conclude that the number of nesting pairs has a significant
@@ -197,19 +205,6 @@ from the summary. The formula would look like this:
 $$ln(Time) = 0.43056 + 0.26509 * Pairs - 0.65237 * SizeS + 0.50406 *
 StatusR$$
 
-Here,
-
-ln(Time) represents the natural logarithm of the extinction time (note
-that log() in R defaults to ln);
-
-Pairs is the number of nesting pairs (as a continuous variable);
-
-SizeS is a binary variable indicating the bird size, with 1 for
-small-sized birds and 0 for large-sized birds;
-
-StatusR is a binary variable indicating the migratory status, with 1 for
-resident birds and 0 for migratory birds.
-
 The coefficients in the formula represent the effects of each variable
 on the logarithm of the extinction time while keeping the other
 variables constant.
@@ -221,9 +216,11 @@ small-sized birds have a 0.65237 units lower logarithm of extinction
 time compared to large-sized birds, holding the number of nesting pairs
 and migratory status constant.
 
-This formula can be used as a conclusion to describe the relationship
-between the extinction time and the variables of interest (number of
-nesting pairs, size, and migratory status) based on the reduced model.
+When converted from a logarithmic equation, these values tell us that large bird species have approximately 92.04\% longer time to extinction than small bird species, and that
+resident bird species have approximately 65.54\% longer time to extinction than migrant bird species.
+For each additional nesting pair, the extinction time increases by approximately 30.35\%.
+
+In conclusion, our analysis suggests that the number of nesting pairs and the size of bird species significantly impact their extinction times. Specifically, large bird species tend to have longer extinction times compared to small bird species, and an increase in the number of nesting pairs also leads to an extension in extinction times. Migratory status further plays a role, with resident species generally experiencing longer extinction times compared to migrant species.
 
 
 

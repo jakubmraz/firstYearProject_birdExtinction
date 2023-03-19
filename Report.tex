@@ -83,6 +83,8 @@ Immediately, we can tell that the square transformation does not improve the mod
 Based on the Q-Q plots, the log transformation seems to be the best fit for the majority of the fitted data points.
 
 \section{Exercise 4}
+Since there were some large outliers, such as the Raven species, it was important for us to decide our approach towards them.
+
 Results can be significantly impacted by the outlier in each end of the scale. Outliers can also affect the measures of the central tendency, more specifically mean, median and mode. Moreover, they can also affect standard deviation and range - the spread of the data.
 
 We believe that is is vital for us to keep the outliers in the dataset for various reasons:
@@ -97,7 +99,7 @@ We therefore think that is is inevitable to keep outliers in our dataset and car
 
 
 \section{Exercise 5}
-Firstly we need to understand the motivation behind transforming a variable. Transformation of a variable is often done to linearize a relationship between two variables which is not linear in its original form. However, in this question we are specifically asked to assess whether there are linear relationships between log('time') and 'pairs' in all possible combinations of 'size' and 'migratory status'.
+We then explored the possibility of log-transforming the pairs variable. Transformation of a variable is often done to linearize a relationship between two variables which is not linear in its original form. However, in this question we are specifically asked to assess whether there are linear relationships between log('time') and 'pairs' in all possible combinations of 'size' and 'migratory status'.
 
 \begin{center}
 \includegraphics[scale=0.5]{graphs/graph5.png}
@@ -111,14 +113,16 @@ The relationship also appears to be more linear than with log-transformed Pairs,
 
 \section{Exercise 6}
 
-\subsection*{6.1}
+Next, we did an analysis as to whether the interactions present in our full model were statistically significant enough for us to preserve. This was done with the help of two methods.
 
+\subsection*{6.1}
+The first method was analysis the R-generated summary of our full model.
 \begin{center}
 \includegraphics[scale=0.5]{tables/log-time.png}
 \end{center}
 
 
-After running this code, you will see the coefficients for each term in the model, including the interactions. To determine whether the slopes are equal for all combinations of “size” and “migratory status,” examine the coefficients for the interaction terms Pairs:Size, Pairs:Status, and Pairs:Size:Status. If the interaction terms are not statistically significant (i.e., their p-values are larger than a chosen significance level, typically 0.05), it suggests that the slopes are not significantly different between the four combinations of “size” and “migratory status.” \\
+To determine whether the slopes are equal for all combinations of “size” and “migratory status,” we examined the coefficients for the interaction terms Pairs:Size, Pairs:Status, and Pairs:Size:Status. If the interaction terms are not statistically significant (i.e., their p-values are larger than a chosen significance level, typically 0.05), it suggests that the slopes are not significantly different between the four combinations of “size” and “migratory status.” \\
 
 Pairs:SizeS: The coefficient is -0.1089 with a p-value of 0.5266, which is not statistically significant at a 0.05 significance level. \\
 
@@ -129,6 +133,9 @@ Pairs:SizeS:StatusR: The coefficient is 0.2717 with a p-value of 0.1629, which i
 Since none of the interaction terms are statistically significant, there is not enough evidence to conclude that the slopes for all four combinations of “size” and “migratory status” are different. This suggests that the relationship between “Pairs” and log(“Time”) may not be significantly different among the four groups based on “size” and “migratory status”. However, it is essential to note that a lack of statistical significance does not necessarily mean the slopes are equal; it indicates that there isn’t enough evidence to reject the null hypothesis that the slopes are equal.
 
 \subsection*{6.2}
+
+The second method was using nested models and R's ANOVA analysis.
+
 Nested models are a series of models where each model is a subset of the previous one. This approach helps in assessing the contribution of variables and their interactions to the overall model fit. To create nested models, start with the simplest model and gradually add variables and interaction terms to evaluate their contributions.
 
 
@@ -183,7 +190,7 @@ Biggest outlier: \\
 - Size: L \\ 
 - Status: R \\
 
-Based on the reduced model, the "theoretical" regression formula for the
+Based on the reduced model, the regression formula for the
 logarithm of extinction time can be constructed using the coefficients
 from the summary. The formula would look like this:
 
